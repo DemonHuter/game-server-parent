@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package game.proto.msgid;
+
+option java_package = "com.game.proto.msgid";
+//option java_outer_classname = "MessageIdProto";
+option java_multiple_files = true;
+
+// 消息ID枚举
+enum MsgIdEnum {
+    // 未知消息类型
+    MSG_UNKNOWN = 0;
+    
+    // 系统消息 (1000-1999)
+    MSG_SYSTEM_HEARTBEAT_REQ = 1000;
+    MSG_SYSTEM_HEARTBEAT_RES = 1001;
+    MSG_SYSTEM_ERROR = 1002;//系统错误
+    
+    // 用户认证 (2000-2999)
+    CS_player_login = 2000;
+    SC_player_login = 2001;
+    CS_player_logout = 2002;
+    SC_player_logout = 2003;
+    SC_create_role = 2004;
+    CS_create_role = 2005;
+
+
+    
+    // 用户信息 (2100-2199)
+    MSG_PLAYER_INFO_REQUEST = 2100;
+    MSG_PLAYER_INFO_RESPONSE = 2101;
+    MSG_PLAYER_UPDATE_REQUEST = 2102;
+    MSG_PLAYER_UPDATE_RESPONSE = 2103;
+    
+    // 聊天消息 (3000-3999)
+    MSG_CHAT_MESSAGE_REQUEST = 3000;
+    MSG_CHAT_MESSAGE_RESPONSE = 3001;
+    MSG_CHAT_BROADCAST = 3002;
+}

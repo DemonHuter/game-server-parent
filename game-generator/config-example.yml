@@ -1,0 +1,89 @@
+# 代码生成器配置模板文件
+# 请复制为 config.yml 并修改相应配置值
+# 注意：请勿将 config.yml 添加到版本控制系统中
+
+# 基础目录路径（所有生成文件的根目录）
+# baseDir: ""
+
+# 数据库配置
+database:
+  url: "jdbc:mysql://localhost:3306/game_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC"
+  username: "game_user"
+  password: "game_pass"
+  driverClassName: "com.mysql.cj.jdbc.Driver"
+
+# 生成路径配置 - 相对于项目根目录
+paths:
+  entity: "game-dao/src/main/java/com/game/dao/entity/"
+  cache: "game-cache/src/main/java/com/game/cache/"
+  dao: "game-dao/src/main/java/com/game/dao/mapper/"
+  xml: "game-dao/src/main/resources/mapper/"
+
+# 包名配置
+packages:
+  entity: "com.game.dao.entity"
+  cache: "com.game.cache"
+  dao: "com.game.dao.mapper"
+
+# 生成选项配置
+options:
+  overwriteExisting: true        # 是否覆盖已存在的文件
+  generateXml: false             # 是否生成XML映射文件
+  generateSwagger: false         # 是否生成Swagger注解
+  generateValidation: false      # 是否生成验证注解
+  tablePrefix: ""               # 表名前缀（生成时会去除）
+  excludeTables: ""             # 排除的表名（逗号分隔）
+  includeTables: ""             # 包含的表名（逗号分隔，为空则包含所有）
+  author: "CodeGenerator"         # 作者名称
+
+# =======================================================
+# 使用说明：
+# =======================================================
+# 1. 将此文件复制为 config.yml
+# 2. 根据实际情况修改配置值
+# 3. 运行代码生成器：java -jar game-generator.jar
+#
+# 也可以通过命令行参数覆盖配置：
+# java -jar game-generator.jar --config config.yml --author "Your Name"
+#
+# 或者在game-server模块的application.yml中添加game.code-generator配置节点
+
+# =======================================================
+# 开发环境配置示例：
+# =======================================================
+# database:
+#   url: "jdbc:mysql://localhost:3306/game_db_dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC"
+#   username: "dev_user"
+#   password: "dev_pass"
+#   driverClassName: "com.mysql.cj.jdbc.Driver"
+# options:
+#   author: "Dev Team"
+#   tablePrefix: "t_"
+#   excludeTables: "temp_table,test_data"
+
+# =======================================================
+# 生产环境配置示例：
+# =======================================================
+# database:
+#   url: "jdbc:mysql://prod-server:3306/game_db_prod?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC"
+#   username: "prod_user"
+#   password: "prod_pass"
+#   driverClassName: "com.mysql.cj.jdbc.Driver"
+# options:
+#   author: "Production Team"
+#   overwriteExisting: false
+#   excludeTables: "sensitive_table,audit_log,sys_log"
+
+# =======================================================
+# 命令行参数说明：
+# =======================================================
+# --config <file>          指定配置文件路径
+# --db-url <url>           数据库URL
+# --db-username <username> 数据库用户名
+# --db-password <password> 数据库密码
+# --author <name>          作者名称
+# --table-prefix <prefix>  表前缀（生成时去除）
+# --exclude-tables <list>  排除的表名（逗号分隔）
+# --include-tables <list>  包含的表名（逗号分隔）
+# --no-overwrite          不覆盖已存在的文件
+# --help, -h              显示帮助信息
