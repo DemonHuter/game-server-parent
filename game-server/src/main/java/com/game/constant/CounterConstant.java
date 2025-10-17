@@ -8,6 +8,5 @@ package com.game.constant;
 public class CounterConstant {
     public static class GlobalCounter {
         public static String CREATE_NUM = "CREATE_NUM";
-        public static String TEST = "TEST";
     }
 }
