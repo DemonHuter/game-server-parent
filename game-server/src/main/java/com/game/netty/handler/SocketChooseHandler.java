@@ -90,7 +90,7 @@ public class SocketChooseHandler extends ByteToMessageDecoder {
         // 添加共享的业务处理器
         addCommonPipeline(pipeline);
 
-        System.out.println("WebSocket协议连接建立11");
+        System.out.println("WebSocket协议连接建立");
     }
 
     private void addCommonPipeline(ChannelPipeline pipeline) {
