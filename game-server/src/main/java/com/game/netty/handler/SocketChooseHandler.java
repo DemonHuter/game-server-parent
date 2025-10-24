@@ -87,7 +87,7 @@ public class SocketChooseHandler extends ByteToMessageDecoder {
         // 由于消息格式相同，可以使用简化的WebSocket帧转换器
         pipeline.addLast("websocket-frame-converter", new SimpleWebSocketFrameConverter());
 
-        // 添加共享的业务处理器
+        // 添加共享的业务处理器 
         addCommonPipeline(pipeline);
 
         System.out.println("WebSocket协议连接建立");
