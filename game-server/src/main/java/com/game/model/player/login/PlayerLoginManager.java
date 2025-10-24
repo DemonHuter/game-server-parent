@@ -2,6 +2,7 @@ package com.game.model.player.login;
 
 import com.game.cache.PlayerCache;
 import com.game.cache.enhance.PlayerCacheEnhancer;
+import com.game.common.util.IdGenerator;
 import com.game.core.MessageUtils;
 import com.game.dao.entity.Player;
 import com.game.model.CommonManager;
@@ -73,17 +74,14 @@ public class PlayerLoginManager extends CommonManager {
         // TODO: 实现实际的登录逻辑，如验证用户名和密码、查询数据库等
         Player player = playerCacheEnhancer.getPlayer(request.getUserId(), request.getServerIndex());
         if (player == null) {
-            //创角
-            SC_create_role.Builder build = SC_create_role.newBuilder();
-            build.setResult(1);
-            MessageUtils.sendResponse(ctx, MsgIdEnum.SC_create_role_VALUE, sequence, build.build().toByteString());
-            return;
+            // 如果玩家不存在，创建新玩家
+            player = createNewPlayer(request);
         }
 
+        // 如果玩家已存在，更新登录时间
         player.setLogintime(System.currentTimeMillis());
-
-        // 保存玩家到缓存
-        playerCache.insert(player);
+        // 更新玩家信息到缓存和数据库
+        playerCache.add(player);
 
         // 注意：心跳注册现在通过PlayerSessionManager的bindPlayerSession方法自动完成
         // 当调用bindPlayerSession时，会触发GameEventManager中的handlePlayerRegistered事件
@@ -100,6 +98,47 @@ public class PlayerLoginManager extends CommonManager {
         login.setName(player.getName());
 
         messageSender.sendMessageToPlayer(player.getPlayerid(), MsgIdEnum.SC_player_login_VALUE, login);
+    }
+
+    /**
+     * 创建新玩家
+     *
+     * @param request 登录请求
+     * @return 新创建的玩家对象
+     */
+    private Player createNewPlayer(CS_player_login request) {
+        Player player = new Player();
+        player.setUserid(request.getUserId());
+        player.setServerindex(request.getServerIndex());
+        player.setName(request.getName());
+        player.setChannel(null);
+        player.setPlatform(null);
+        player.setDevicetype(null);
+        player.setNetworktype(null);
+        player.setSourceid(null);
+        player.setDeviceversion(request.getClientVersion());
+        player.setMacaddr(request.getDeviceId());
+        player.setLanguage("zh_CN"); // 默认语言
+        player.setCreatetime(System.currentTimeMillis());
+        player.setLogintime(System.currentTimeMillis());
+        player.setLogouttime(0L);
+        player.setGm(0);
+        player.setTotalcharge(0L);
+        player.setTotalprice(java.math.BigDecimal.ZERO);
+        player.setPaygroupids("");
+        player.setPaylimit("");
+        player.setFirstbuy(0);
+        player.setSecondbuy(0);
+        player.setThirdbuy(0);
+        player.setBuytime(0L);
+        player.setPushset("");
+        player.setState("online");
+        player.setCreatenum(0);
+        
+        // 生成唯一的playerid（使用雪花算法或类似方法）
+        player.setPlayerid(IdGenerator.getInstance().generateId());
+        
+        return player;
     }
 
     /**

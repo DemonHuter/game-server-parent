@@ -216,7 +216,7 @@ public class CounterManager extends CommonManager {
             counter.setCounterdata(counterDataJson);
 
             // 更新counterCache
-            counterCache.add(counter, persistType);
+            counterCache.add(counter);
         } catch (Exception e) {
             logger.error("Failed to update counter cache for playerId: {}", playerId, e);
         }

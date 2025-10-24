@@ -58,7 +58,7 @@ public abstract class BaseCache<T extends BaseEntity> {
         this.dao = dao;
     }
 
-    public void add(T entity, PersistType persistType) {
+    private void add(T entity, PersistType persistType) {
         synchronized (lock) {
             if (persistType == PersistType.INSERT) {
                 if (entity == null) {
@@ -147,8 +147,12 @@ public abstract class BaseCache<T extends BaseEntity> {
     /**
      * 新增实体到缓存（只操作缓存，不操作数据库）
      */
-    public void insert(T entity) {
-        add(entity, PersistType.INSERT);
+    public void add(T entity) {
+        if(contains(Long.valueOf(entity.getIdx()))) {
+            add(entity, PersistType.UPDATE);
+        }else{
+            add(entity, PersistType.INSERT);
+        }
     }
 
     /**
@@ -170,7 +174,7 @@ public abstract class BaseCache<T extends BaseEntity> {
      * 异步新增实体
      */
     public CompletableFuture<Void> asyncInsert(T entity) {
-        return CompletableFuture.runAsync(() -> insert(entity));
+        return CompletableFuture.runAsync(() -> add(entity));
     }
 
     /**

@@ -29,6 +29,16 @@ public final class Game {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_game_proto_ErrorMessage_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_game_proto_Test_Req_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_game_proto_Test_Req_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_game_proto_Test_Res_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_game_proto_Test_Res_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -43,11 +53,12 @@ public final class Game {
       "\030\003 \001(\014\"6\n\020HeartbeatMessage\022\021\n\ttimestamp\030" +
       "\001 \001(\003\022\017\n\007message\030\002 \001(\t\"H\n\014ErrorMessage\022\021" +
       "\n\terrorCode\030\001 \001(\005\022\024\n\014errorMessage\030\002 \001(\t\022" +
-      "\017\n\007details\030\003 \001(\t*\213\001\n\016ResponseStatus\022\013\n\007S" +
-      "UCCESS\020\000\022\n\n\006FAILED\020\001\022\t\n\005ERROR\020\002\022\021\n\rINVAL" +
-      "ID_PARAM\020\003\022\025\n\021PERMISSION_DENIED\020\004\022\022\n\016USE" +
-      "R_NOT_FOUND\020\005\022\027\n\023USER_ALREADY_ONLINE\020\006B\022" +
-      "\n\016com.game.protoP\001b\006proto3"
+      "\017\n\007details\030\003 \001(\t\"\027\n\010Test_Req\022\013\n\003req\030\001 \001(" +
+      "\t\"\027\n\010Test_Res\022\013\n\003res\030\001 \001(\t*\213\001\n\016ResponseS" +
+      "tatus\022\013\n\007SUCCESS\020\000\022\n\n\006FAILED\020\001\022\t\n\005ERROR\020" +
+      "\002\022\021\n\rINVALID_PARAM\020\003\022\025\n\021PERMISSION_DENIE" +
+      "D\020\004\022\022\n\016USER_NOT_FOUND\020\005\022\027\n\023USER_ALREADY_" +
+      "ONLINE\020\006B\022\n\016com.game.protoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -71,6 +82,18 @@ public final class Game {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_game_proto_ErrorMessage_descriptor,
         new java.lang.String[] { "ErrorCode", "ErrorMessage", "Details", });
+    internal_static_game_proto_Test_Req_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_game_proto_Test_Req_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_game_proto_Test_Req_descriptor,
+        new java.lang.String[] { "Req", });
+    internal_static_game_proto_Test_Res_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_game_proto_Test_Res_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_game_proto_Test_Res_descriptor,
+        new java.lang.String[] { "Res", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

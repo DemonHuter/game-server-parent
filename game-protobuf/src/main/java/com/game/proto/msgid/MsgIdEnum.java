@@ -22,7 +22,7 @@ public enum MsgIdEnum
   MSG_UNKNOWN(0),
   /**
    * <pre>
-   * 系统消息 (1000-1999)
+   * 系统消息 (1000-1200)
    * </pre>
    *
    * <code>MSG_SYSTEM_HEARTBEAT_REQ = 1000;</code>
@@ -40,6 +40,18 @@ public enum MsgIdEnum
    * <code>MSG_SYSTEM_ERROR = 1002;</code>
    */
   MSG_SYSTEM_ERROR(1002),
+  /**
+   * <pre>
+   *测试
+   * </pre>
+   *
+   * <code>CS_test = 1500;</code>
+   */
+  CS_test(1500),
+  /**
+   * <code>SC_test = 1501;</code>
+   */
+  SC_test(1501),
   /**
    * <pre>
    * 用户认证 (2000-2999)
@@ -117,7 +129,7 @@ public enum MsgIdEnum
   public static final int MSG_UNKNOWN_VALUE = 0;
   /**
    * <pre>
-   * 系统消息 (1000-1999)
+   * 系统消息 (1000-1200)
    * </pre>
    *
    * <code>MSG_SYSTEM_HEARTBEAT_REQ = 1000;</code>
@@ -135,6 +147,18 @@ public enum MsgIdEnum
    * <code>MSG_SYSTEM_ERROR = 1002;</code>
    */
   public static final int MSG_SYSTEM_ERROR_VALUE = 1002;
+  /**
+   * <pre>
+   *测试
+   * </pre>
+   *
+   * <code>CS_test = 1500;</code>
+   */
+  public static final int CS_test_VALUE = 1500;
+  /**
+   * <code>SC_test = 1501;</code>
+   */
+  public static final int SC_test_VALUE = 1501;
   /**
    * <pre>
    * 用户认证 (2000-2999)
@@ -229,6 +253,8 @@ public enum MsgIdEnum
       case 1000: return MSG_SYSTEM_HEARTBEAT_REQ;
       case 1001: return MSG_SYSTEM_HEARTBEAT_RES;
       case 1002: return MSG_SYSTEM_ERROR;
+      case 1500: return CS_test;
+      case 1501: return SC_test;
       case 2000: return CS_player_login;
       case 2001: return SC_player_login;
       case 2002: return CS_player_logout;

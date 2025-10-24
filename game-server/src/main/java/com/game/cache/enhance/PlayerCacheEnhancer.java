@@ -108,7 +108,7 @@ public class PlayerCacheEnhancer implements CacheEnhancer<Player, PlayerCache> {
         }
         
         // 更新主缓存
-        playerCache.insert(player);
+        playerCache.add(player);
         
         // 更新增强缓存
         String key = generateKey(player.getUserid(), player.getServerindex());
