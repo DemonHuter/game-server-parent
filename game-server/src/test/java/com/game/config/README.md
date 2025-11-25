@@ -2,7 +2,7 @@
 
 ## 概述
 
-该工具用于将game-server/config目录下的Excel配置文件转换为内存数据和Java实体类。
+该工具用于将config目录下的Excel配置文件转换为内存数据和Java实体类。
 
 ## 转换规则
 

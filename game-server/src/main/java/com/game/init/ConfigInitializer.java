@@ -1,6 +1,5 @@
 package com.game.init;
 
-import com.game.common.util.ConfigUtils;
 import com.game.config.ExcelConfigManager;
 import com.game.constant.SystemInitializeOrder;
 import com.game.model.config.ConfigManager;
@@ -13,7 +12,7 @@ import java.io.File;
 
 /**
  * 配置初始化类
- * 在应用启动时读取game-server/config目录下的所有Excel文件并加载到内存中
+ * 在应用启动时读取config目录下的所有Excel文件并加载到内存中
  */
 @Component
 public class ConfigInitializer implements SystemInitializer {
@@ -39,8 +38,23 @@ public class ConfigInitializer implements SystemInitializer {
         logger.info("开始初始化Excel配置文件...");
         
         try {
-            // 获取配置文件目录，使用配置路径而不是写死的game-server路径
-            File configDir = new File(ConfigUtils.getGameConfigPath());
+            // 获取配置文件目录，使用ExcelConfigManager中注入的configPath
+            // 智能检测config目录位置
+            String configPath = excelConfigManager.getConfigPath();
+            File configDir = new File(configPath);
+            
+            // 如果config目录不存在，尝试在当前目录下查找
+            if (!configDir.exists() || !configDir.isDirectory()) {
+                logger.warn("配置目录不存在: {}, 尝试在当前目录查找", configDir.getAbsolutePath());
+                configDir = new File("config");
+            }
+            
+            // 如果当前目录也没有，尝试在上级目录查找
+            if ((!configDir.exists() || !configDir.isDirectory()) && !configPath.equals("../config")) {
+                logger.warn("配置目录不存在: {}, 尝试在上级目录查找", configDir.getAbsolutePath());
+                configDir = new File("../config");
+            }
+            
             if (!configDir.exists() || !configDir.isDirectory()) {
                 logger.warn("配置目录不存在: {}", configDir.getAbsolutePath());
                 return;

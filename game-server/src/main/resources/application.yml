@@ -29,11 +29,11 @@ game:
   
   # 配置文件路径
   config:
-    path: game-server/config      # Excel配置文件路径（相对于项目根目录）
+    path: config      # Excel配置文件路径（相对于运行目录）
   
   # game-server目录路径
   server:
-    path: game-server             # game-server目录路径（相对于项目根目录）
+    path: .             # 当前目录路径
 
   #服务器索引
   serverIndex: 1

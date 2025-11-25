@@ -437,10 +437,29 @@ public class ExcelToEntityConverter {
         // 默认参数
         String packageName = "com.game.config.data";
         
-        // 从配置文件中读取game-server目录路径
+        // 从配置文件中读取配置目录路径
+        String configPath = ConfigUtils.getGameConfigPath();
         String gameServerPath = ConfigUtils.getGameServerPath();
-        String outputPath = gameServerPath + "src/main/java/com/game/config/data";
-        String excelFilePath = gameServerPath + "config/" + excelFileName;
+        // 修正输出路径，确保指向game-server模块
+        String outputPath = "game-server/src/main/java/com/game/config/data";
+        // 使用配置目录路径构造Excel文件路径
+        String excelFilePath = configPath + "/" + excelFileName;
+        
+        // 如果configPath已经是完整路径，则直接使用
+        File excelFile = new File(excelFilePath);
+        if (!excelFile.exists()) {
+            // 如果文件不存在，尝试使用相对路径
+            excelFile = new File("config/" + excelFileName);
+            if (excelFile.exists()) {
+                excelFilePath = "config/" + excelFileName;
+            } else {
+                // 最后尝试直接使用文件名
+                excelFile = new File(excelFileName);
+                if (excelFile.exists()) {
+                    excelFilePath = excelFileName;
+                }
+            }
+        }
 
         try {
             System.out.println("Excel Entity Generator");
@@ -451,7 +470,7 @@ public class ExcelToEntityConverter {
             System.out.println();
 
             // 检查Excel文件是否存在
-            File excelFile = new File(excelFilePath);
+            excelFile = new File(excelFilePath);
             if (!excelFile.exists()) {
                 System.err.println("错误: Excel文件不存在: " + excelFilePath);
                 System.exit(1);

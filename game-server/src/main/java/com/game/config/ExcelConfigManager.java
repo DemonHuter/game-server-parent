@@ -40,6 +40,38 @@ public class ExcelConfigManager {
     private String configPath;
 
     /**
+     * 获取配置文件路径
+     * 
+     * @return 配置文件路径
+     */
+    public String getConfigPath() {
+        // 智能检测config目录位置
+        // 1. 首先检查当前目录下是否存在config目录
+        File currentConfigDir = new File("config");
+        if (currentConfigDir.exists() && currentConfigDir.isDirectory()) {
+            logger.info("在当前目录找到config目录: {}", currentConfigDir.getAbsolutePath());
+            return "config";
+        }
+        
+        // 2. 检查game-server/config目录（开发环境）
+        File devConfigDir = new File("game-server/config");
+        if (devConfigDir.exists() && devConfigDir.isDirectory()) {
+            logger.info("在game-server目录找到config目录: {}", devConfigDir.getAbsolutePath());
+            return "game-server/config";
+        }
+        
+        // 3. 如果当前目录没有config目录，检查上级目录
+        File parentConfigDir = new File("../config");
+        if (parentConfigDir.exists() && parentConfigDir.isDirectory()) {
+            logger.info("在上级目录找到config目录: {}", parentConfigDir.getAbsolutePath());
+            return "../config";
+        }
+        
+        // 4. 返回配置文件中的路径
+        return configPath;
+    }
+
+    /**
      * 加载单个配置文件
      *
      * @param excelFile Excel文件
@@ -398,8 +430,8 @@ public class ExcelConfigManager {
      * @param configFileName 配置文件名
      */
     public void reloadConfig(String configFileName) {
-        // 使用配置路径而不是写死的game-server路径
-        File configFile = new File(configPath, configFileName);
+        // 使用智能检测后的配置路径
+        File configFile = new File(getConfigPath(), configFileName);
         if (!configFile.exists()) {
             logger.warn("Config file not found: {}", configFile.getAbsolutePath());
             return;

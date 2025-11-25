@@ -18,6 +18,8 @@
 
     <properties>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <!-- 跳过测试 -->
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <dependencies>
@@ -188,7 +190,7 @@
                 </configuration>
             </plugin>
             
-            <!-- 添加依赖插件，用于复制依赖到target/dependency目录 -->
+            <!-- 修改依赖插件配置，将依赖复制到lib目录 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -201,7 +203,8 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                            <!-- 修改输出目录为lib -->
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -210,7 +213,32 @@
                 </executions>
             </plugin>
             
-            <!-- 添加Jar插件配置 -->
+            <!-- 添加插件，将config目录复制到target目录下 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-config</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/config</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>config</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- 修改Jar插件配置 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -219,8 +247,9 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>dependency/</classpathPrefix>
-                            <mainClass>com.game.config.ExcelEntityGenerator</mainClass>
+                            <!-- 修改classpath前缀为lib/ -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.game.GameServerApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -242,7 +271,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <classpathPrefix>dependency/</classpathPrefix>
+                                    <classpathPrefix>lib/</classpathPrefix>
                                     <mainClass>com.game.config.ExcelEntityGenerator</mainClass>
                                 </manifest>
                             </archive>
